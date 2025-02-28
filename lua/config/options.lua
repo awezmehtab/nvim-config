@@ -1,8 +1,5 @@
 local opt = vim.opt
 
--- inherit shell cursor
-opt.guicursor = ""
-
 -- indentation is important
 opt.tabstop = 4
 opt.shiftwidth = 4
