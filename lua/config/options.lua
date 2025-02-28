@@ -3,6 +3,7 @@ local opt = vim.opt
 -- indentation is important
 opt.tabstop = 4
 opt.shiftwidth = 4
+opt.expandtab = true
 
 -- must needed to jump easily
 opt.number = true
