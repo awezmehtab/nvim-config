@@ -1,5 +1,11 @@
 local opt = vim.opt
 
+-- Inherit cursor from the terminal, if the NVIM_TERMINAL_CURSOR is set to "true"
+local nvim_cursor = os.getenv("NVIM_TERMINAL_CURSOR")
+if nvim_cursor == "true" then
+    opt.guicursor = ""
+end
+
 -- indentation is important
 opt.tabstop = 4
 opt.shiftwidth = 4

@@ -1,2 +1,8 @@
+# Lock file
 lazy-lock.json
+
+# For macOS
 .DS_Store
+
+# For WSL
+*Zone.Identifier
