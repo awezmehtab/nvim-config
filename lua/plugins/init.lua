@@ -101,4 +101,6 @@ return {
             --  Check out: https://github.com/echasnovski/mini.nvim
         end,
     },
+
+    { "nvim-tree/nvim-web-devicons", opts = {} },
 }
