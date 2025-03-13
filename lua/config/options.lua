@@ -76,3 +76,5 @@ opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 opt.scrolloff = 10
+
+vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#ff0000", bg = "#00ff00" })

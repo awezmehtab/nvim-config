@@ -102,5 +102,12 @@ return {
         end,
     },
 
-    { "nvim-tree/nvim-web-devicons", opts = {} },
+    {
+        "nvim-tree/nvim-web-devicons",
+        lazy = false,
+        priority = 1000,
+        enabled = true,
+    },
+
+    { "knubie/vim-kitty-navigator" },
 }

@@ -9,6 +9,9 @@ return {
                     section_separators = "",
                     component_separators = "",
                 },
+                sections = {
+                    lualine_x = { "encoding", { "fileformat", symbols = { unix = "󰣇" } }, "filetype" },
+                },
             })
         end,
     },
