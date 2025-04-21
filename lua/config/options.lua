@@ -78,3 +78,9 @@ opt.cursorline = true
 opt.scrolloff = 10
 
 vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#ff0000", bg = "#00ff00" })
+
+-- It's better if the whole line doesn't have a background
+vim.o.cursorline = false -- or false if you want it off
+vim.cmd("hi! CursorLine guibg=NONE ctermbg=NONE")
+
+opt.fillchars = { eob = " " }
