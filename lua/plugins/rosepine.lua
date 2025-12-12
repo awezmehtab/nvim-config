@@ -6,10 +6,8 @@ return {
             styles = {
                 transparency = true,
             },
-            highlight_groups = {
-                WinSeparator = { fg = "#000000", bg = "#000000" },
-            },
         })
         vim.cmd("colorscheme rose-pine")
+        vim.opt.fillchars:append({ vert = " " })
     end,
 }

@@ -226,8 +226,17 @@ return {
             --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
             local servers = {
                 clangd = {
-                    cmd = { "clangd", "--header-insertion=never" },
+                    handlers = {
+                        ["textDocument/publishDiagnostics"] = function(...) end, -- disables diagnostics
+                    },
+                    capabilities = {
+                        textDocument = {
+                            publishDiagnostics = {},
+                        },
+                    },
                 },
+
+                -- pylsp = {},
                 -- gopls = {},
                 -- pyright = {},
                 -- rust_analyzer = {},
@@ -273,6 +282,7 @@ return {
             vim.list_extend(ensure_installed, {
                 "stylua", -- Used to format Lua code
             })
+
             require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
             require("mason-lspconfig").setup({
@@ -287,6 +297,11 @@ return {
                         server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
                         require("lspconfig")[server_name].setup(server)
                     end,
+                },
+                automatic_enable = {
+                    exclude = {
+                        "clangd",
+                    },
                 },
             })
         end,

@@ -119,4 +119,38 @@ return {
             { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
         },
     },
+
+    {
+        "https://github.com/norcalli/nvim-colorizer.lua",
+        config = function()
+            vim.defer_fn(function()
+                vim.cmd("ColorizerAttachToBuffer")
+            end, 0)
+
+            vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+                callback = function()
+                    vim.cmd("ColorizerAttachToBuffer")
+                end,
+            })
+        end,
+    },
+
+    {
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        config = function()
+            require("toggleterm").setup({
+                direction = "horizontal",
+                size = 12,
+                start_in_insert = true,
+                persist_size = true,
+                shading_factor = 2,
+            })
+            vim.api.nvim_create_autocmd("VimEnter", {
+                callback = function()
+                    vim.cmd("ToggleTerm")
+                end,
+            })
+        end,
+    },
 }

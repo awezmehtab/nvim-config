@@ -83,4 +83,26 @@ vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#ff0000", bg = "#00ff00" })
 vim.o.cursorline = false -- or false if you want it off
 vim.cmd("hi! CursorLine guibg=NONE ctermbg=NONE")
 
-opt.fillchars = { eob = " " }
+opt.fillchars = { eob = " ", vert = "│" }
+vim.api.nvim_set_hl(0, "WinSeparator", { bg = "NONE", fg = "NONE" })
+
+local diagnostics_visible = true
+vim.keymap.set("n", "<leader>Q", function()
+    if diagnostics_visible then
+        vim.diagnostic.hide()
+        diagnostics_visible = false
+    else
+        vim.diagnostic.show()
+        diagnostics_visible = true
+    end
+end, { desc = "Toggle diagnostics" })
+
+opt.textwidth = 80
+
+vim.filetype.add({
+    extension = {
+        scm = "racket",
+    },
+})
+
+vim.opt.termguicolors = true

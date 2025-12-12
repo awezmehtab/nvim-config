@@ -10,8 +10,12 @@ return {
                     component_separators = "",
                 },
                 sections = {
+                    lualine_c = {
+                        { "filename", path = 1 }, -- full path
+                    },
                     lualine_x = { "encoding", { "fileformat", symbols = { unix = "󰣇" } }, "filetype" },
                 },
+                extensions = { "toggleterm" },
             })
         end,
     },

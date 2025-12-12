@@ -22,10 +22,9 @@ return {
                 local disable_filetypes = { c = true, cpp = true }
                 local lsp_format_opt
                 if disable_filetypes[vim.bo[bufnr].filetype] then
-                    lsp_format_opt = "never"
-                else
-                    lsp_format_opt = "fallback"
+                    return false
                 end
+                lsp_format_opt = "fallback"
                 return {
                     timeout_ms = 500,
                     lsp_format = lsp_format_opt,
@@ -33,10 +32,11 @@ return {
             end,
             formatters_by_ft = {
                 lua = { "stylua" },
-                c = { "clang-format" },
-                cpp = { "clang-format" },
+                c = { "clang_format" },
+                cpp = { "clang_format" },
                 -- haskell = { "hindent" },
                 awk = { "gawk" },
+                python = { "black" },
 
                 -- Conform can also run multiple formatters sequentially
                 -- python = { "isort", "black" },
@@ -44,7 +44,13 @@ return {
                 -- You can use 'stop_after_first' to run the first available formatter from the list
                 -- javascript = { "prettierd", "prettier", stop_after_first = true },
             },
-            -- formatters = { haskell = { args = { "--no-force-newline" } } },
+            formatters = {
+                haskell = { args = { "--no-force-newline" } },
+                clang_format = {
+                    command = "clang-format",
+                    args = {},
+                },
+            },
             stop_after_first = true,
         },
     },
