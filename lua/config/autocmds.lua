@@ -12,37 +12,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
-vim.api.nvim_create_autocmd("BufNewFile", {
-    pattern = "/home/awez/learn/codef/*.cpp",
-    callback = function(args)
-        local bufnr = args.buf
-        local filepath = vim.api.nvim_buf_get_name(bufnr)
-        local num, prob = filepath:match("codef/(%d+)/([A-Z])%.cpp")
-
-        vim.api.nvim_buf_set_lines(bufnr, 0, 0, false, {
-            "/*",
-            " * Author: awez_mehtab",
-            " * Problem: " .. num .. prob,
-            " * Time: " .. os.date("%Y-%m-%d %H:%M"),
-            " */",
-            "#include <bits/stdc++.h>",
-            "using namespace std;",
-            "",
-            "typedef long long ll;",
-            "",
-            "int main() {",
-            "    ll t;",
-            "    cin >> t;",
-            "",
-            "    while (t--) {",
-            "        ",
-            "    }",
-            "}",
-        })
-    end,
-})
-
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.asm",
     command = "set filetype=fasm",
 })
+
+-- vim.api.nvim_create_autocmd("TermOpen", {
+--     callback = function()
+--         vim.wo.statusline = "%!v:lua.statusline()"
+--     end,
+-- })

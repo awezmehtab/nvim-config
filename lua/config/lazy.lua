@@ -24,6 +24,7 @@ vim.g.maplocalleader = " "
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
+-- require("config.statusline")
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
@@ -36,7 +37,7 @@ require("lazy").setup({
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "habamax" } },
+    install = { colorscheme = { "kanagawa-dragon" } },
     -- automatically check for plugin updates
     checker = { enabled = false },
 })
