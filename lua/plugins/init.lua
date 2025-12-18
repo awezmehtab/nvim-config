@@ -110,8 +110,6 @@ return {
         enabled = true,
     },
 
-    { "knubie/vim-kitty-navigator" },
-
     {
         "jiaoshijie/undotree",
         dependencies = "nvim-lua/plenary.nvim",
@@ -133,6 +131,14 @@ return {
                     vim.cmd("ColorizerAttachToBuffer")
                 end,
             })
+        end,
+    },
+
+    {
+        "skardyy/neo-img",
+        build = ":NeoImg Install",
+        config = function()
+            require("neo-img").setup()
         end,
     },
 }

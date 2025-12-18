@@ -17,8 +17,8 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     command = "set filetype=fasm",
 })
 
--- vim.api.nvim_create_autocmd("TermOpen", {
---     callback = function()
---         vim.wo.statusline = "%!v:lua.statusline()"
---     end,
--- })
+vim.api.nvim_create_autocmd("TermOpen", {
+    callback = function()
+        vim.cmd("startinsert")
+    end,
+})
