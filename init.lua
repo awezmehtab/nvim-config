@@ -1,4 +1,7 @@
+-- require("config.statusline")
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+require("config.lsp")
+require("config.diagnostics")
 require("config.lazy")
-for i = 0, 15 do
-    vim.g[("terminal_color_%u"):format(i)] = nil
-end

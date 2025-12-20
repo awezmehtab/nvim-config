@@ -7,6 +7,10 @@ return {
             -- delay between pressing a key and opening which-key (milliseconds)
             -- this setting is independent of vim.opt.timeoutlen
             delay = 0,
+            triggers = {
+                { "auto", mode = "nixsotc" },
+                -- { "<leader>a", mode = { "n", "v" } }
+            },
             icons = {
                 -- set icon mappings to true if you have a Nerd Font
                 mappings = vim.g.have_nerd_font,
@@ -43,17 +47,6 @@ return {
                     F12 = "<F12>",
                 },
             },
-
-            -- Document existing key chains
-            spec = {
-                { "<leader>c", group = "[C]ode", mode = { "n", "x" } },
-                { "<leader>d", group = "[D]ocument" },
-                { "<leader>r", group = "[R]ename" },
-                { "<leader>s", group = "[S]earch" },
-                { "<leader>w", group = "[W]orkspace" },
-                { "<leader>t", group = "[T]oggle" },
-                { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
-            },
         },
     },
 
@@ -65,13 +58,6 @@ return {
         opts = { signs = false },
     },
 
-    {
-        "echasnovski/mini.nvim",
-        config = function()
-            require("mini.ai").setup({ n_lines = 500 })
-            require("mini.surround").setup()
-        end,
-    },
 
     {
         "nvim-tree/nvim-web-devicons",
@@ -90,7 +76,7 @@ return {
     },
 
     {
-        "https://github.com/norcalli/nvim-colorizer.lua",
+        "norcalli/nvim-colorizer.lua",
         config = function()
             vim.defer_fn(function()
                 vim.cmd("ColorizerAttachToBuffer")
@@ -111,4 +97,36 @@ return {
             require("neo-img").setup()
         end,
     },
+
+    {
+        -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+        -- used for completion, annotations and signatures of Neovim apis
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+
+    {
+        "j-hui/fidget.nvim",
+        opts = {
+            -- Options related to LSP progress subsystem
+            progress = {
+                display = {
+                    done_icon = "✔", -- Icon shown when all LSP tasks are complete
+                    progress_icon = { "dots" }, -- Animation style
+                },
+            },
+            -- Options related to notification subsystem
+            notification = {
+                window = {
+                    winblend = 0, -- Background color opacity (0 = opaque)
+                },
+            },
+        },
+    }
 }
