@@ -11,6 +11,7 @@ opt.relativenumber = true
 opt.expandtab = true
 opt.shiftwidth = 4
 opt.softtabstop = -1
+opt.tabstop = 4
 opt.winborder = "rounded"
 opt.signcolumn = "yes"
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
@@ -95,6 +96,7 @@ map("n", "<leader>u", "<cmd>Undotree<CR>", { desc = "Undotree" })
 map("n", "<leader>tb", "<cmd>Telescope buffers<CR>", { desc = "Buffers" })
 map("n", "<leader>t/", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "Buffer Fuzzy Find" })
 map("n", "<leader>tf", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
+map("n", "<leader>tg", "<cmd>Telescope live_grep<CR>", { desc = "Live Grep" })
 map("n", "<leader>th", "<cmd>Telescope help_tags<CR>", { desc = "Help" })
 
 map("t", "<C-w>h", "<C-\\><C-n><C-w>h")
