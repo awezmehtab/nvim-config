@@ -1,5 +1,17 @@
+function _G.nvim_tabline_click(handle, _, button)
+    if button == "m" then
+        vim.api.nvim_set_current_tabpage(handle)
+        vim.cmd("tabclose")
+        return
+    end
+    vim.api.nvim_set_current_tabpage(handle)
+    if vim.bo.buftype == "terminal" then
+        vim.cmd("startinsert")
+    end
+end
+
 function _G.nvim_tabline()
-    local s = ""
+    local s = "%="
     local handles = vim.api.nvim_list_tabpages()
     for i = 1, vim.fn.tabpagenr("$") do
         local buf = vim.fn.tabpagebuflist(i)[vim.fn.tabpagewinnr(i)]
@@ -17,11 +29,11 @@ function _G.nvim_tabline()
             end
         end
         local modified = vim.bo[buf].modified and "+" or ""
-        s = s .. "%" .. i .. "T"
+        s = s .. "%" .. handles[i] .. "@v:lua.nvim_tabline_click@"
         s = s .. (i == vim.fn.tabpagenr() and "%#TabLineSel#" or "%#TabLine#")
         s = s .. " " .. name .. modified .. " "
-        s = s .. "%T"
+        s = s .. "%X"
     end
-    return s .. "%#TabLineFill#"
+    return s .. "%=%#TabLineFill#"
 end
 vim.o.tabline = "%!v:lua.nvim_tabline()"

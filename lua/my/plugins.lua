@@ -5,23 +5,22 @@ end
 
 vim.pack.add({
     gh("folke/lazydev.nvim"),
-    gh("rose-pine/neovim"),
     gh("mason-org/mason.nvim"),
     gh("stevearc/oil.nvim"),
     gh("nvim-tree/nvim-web-devicons"),
-    gh("nvim-lua/plenary.nvim"),
-    gh("nvim-telescope/telescope.nvim"),
+    gh("ibhagwan/fzf-lua"),
     gh("tpope/vim-dadbod"),
     gh("kristijanhusak/vim-dadbod-ui"),
     gh("kristijanhusak/vim-dadbod-completion"),
     gh("stevearc/conform.nvim"),
-    gh("lervag/vimtex"),
     gh("neovim/nvim-lspconfig"),
     gh("3rd/image.nvim"),
     gh("chomosuke/typst-preview.nvim"),
+    gh("tpope/vim-fugitive"),
+    gh("sindrets/diffview.nvim"),
 })
 
--- On-demand plugins, not loaded until ":packadd ...".
+-- not loaded until ":packadd ..."
 vim.pack.add({ "https://github.com/NvChad/showkeys" }, { load = function() end })
 vim.cmd.packadd("nvim.undotree")
 vim.cmd.packadd("nohlsearch")
@@ -50,17 +49,12 @@ vim.lsp.enable({
     "tinymist",
 })
 
-require("rose-pine").setup({
-    styles = {
-        italic = true,
-        transparency = true
-    }
-})
-vim.cmd("colorscheme rose-pine")
-vim.api.nvim_set_hl(0, "StatusLineTerm", { link = "StatusLine" })
-vim.api.nvim_set_hl(0, "StatusLineTermNC", { link = "StatusLineNC" })
-
 require("oil").setup({
+    keymaps = {
+        ["<C-s>"] = false,
+        ["<C-h>"] = false,
+        ["<C-l>"] = false,
+    },
     columns = {
         "icon",
         "permissions",
@@ -76,7 +70,7 @@ require("oil").setup({
     constrain_cursor = false,
 })
 
-require("telescope").setup({})
+require("fzf-lua").setup({})
 
 require("conform").setup({
     formatters_by_ft = {
@@ -96,3 +90,4 @@ vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 require("image").setup()
 require("typst-preview").setup()
+require("diffview").setup()
