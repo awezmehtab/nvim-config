@@ -5,9 +5,6 @@ function _G.nvim_tabline_click(handle, _, button)
         return
     end
     vim.api.nvim_set_current_tabpage(handle)
-    if vim.bo.buftype == "terminal" then
-        vim.cmd("startinsert")
-    end
 end
 
 function _G.nvim_tabline()

@@ -89,5 +89,4 @@ require("conform").setup({
 vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 require("image").setup()
-require("typst-preview").setup()
 require("diffview").setup()

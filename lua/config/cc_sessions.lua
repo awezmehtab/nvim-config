@@ -21,9 +21,7 @@ local function session_cwd(path)
             cwd = d.cwd
             break
         end
-        if count >= 3000 then
-            break
-        end
+        if count >= 3000 then break end
     end
     f:close()
     return cwd
@@ -50,11 +48,7 @@ local function session_title(path)
 end
 
 local function scan_sessions()
-    local base = vim.env.CLAUDE_CONFIG_DIR
-    if not base then
-        vim.notify("CLAUDE_CONFIG_DIR is not set", vim.log.levels.ERROR)
-        return {}
-    end
+    local base = vim.env.CLAUDE_CONFIG_DIR or "~/.claude"
     local proj_dir = base .. "/projects"
     local sessions = {}
     for name in vim.fs.dir(proj_dir) do
@@ -114,9 +108,8 @@ function M.pick()
                         .. " && claude --resume "
                         .. vim.fn.shellescape(s.id)
                 )
-                vim.t.tabname = "claude"
+                vim.t.tabname = "cc"
                 vim.cmd.redrawtabline()
-                vim.cmd("startinsert")
             end,
         },
     })
