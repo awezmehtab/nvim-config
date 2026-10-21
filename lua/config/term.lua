@@ -6,8 +6,10 @@ end
 
 autocmd("TermOpen", function(args)
     if args.buf == vim.api.nvim_get_current_buf() then
-        vim.wo.statusline = " "
-        vim.cmd.startinsert()
+        vim.wo.statusline = "%#Normal#%="
+        if not vim.g.SessionLoad then
+            vim.cmd.startinsert()
+        end
     end
 end)
 
@@ -18,9 +20,12 @@ autocmd("WinLeave", function()
     end
 end)
 autocmd({ "WinEnter", "BufEnter" }, function()
-    if vim.bo.buftype == "terminal" then
+    if vim.bo.buftype == "terminal" and not vim.g.SessionLoad then
         vim.cmd(vim.b.term_insert == false and "stopinsert" or "startinsert")
     end
+end)
+autocmd("SessionLoadPost", function()
+    vim.cmd(vim.bo.buftype == "terminal" and "startinsert" or "stopinsert")
 end)
 
 -- zsh's clear_screen widget sends this; drop the cleared prompts' marks

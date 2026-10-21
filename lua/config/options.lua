@@ -1,5 +1,3 @@
-vim.g.editorconfig = true
-
 local opt = vim.opt
 opt.number = true
 opt.relativenumber = true
@@ -16,3 +14,10 @@ opt.splitbelow = true
 opt.undofile = true
 opt.mouse = "a"
 opt.tabclose = "uselast"
+opt.exrc = true
+
+vim.filetype.add({
+    extension = {
+        asm = "fasm",
+    },
+})

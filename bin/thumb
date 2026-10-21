@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ "$1" = -c ]; then cached=1; shift; fi
+f="$(realpath "$1")" || exit 1
+
+cache="${XDG_CACHE_HOME:=$HOME/.cache}/thumbs"
+mkdir -p "$cache"
+thumb="$cache/$(printf '%s%s' "$f" "$(stat -c %Y "$f")" | sha256sum | cut -d' ' -f1).png"
+
+if [ ! -f "$thumb" ]; then
+    [ -n "$cached" ] && exit 1
+    tmp="$thumb.$$"
+    case "$(file -Lb --mime-type "$f")" in
+        application/pdf) pdftoppm -png -singlefile -f 1 -scale-to 1024 "$f" "$tmp" ;;
+        video/*) ffmpegthumbnailer -i "$f" -o "$tmp.png" -s 1024 ;;
+        *) exit 1 ;;
+    esac >/dev/null 2>&1 && mv "$tmp.png" "$thumb" || { rm -f "$tmp.png"; exit 1; }
+fi
+echo "$thumb"

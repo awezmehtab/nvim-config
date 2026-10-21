@@ -3,6 +3,7 @@ vim.g.maplocalleader = " "
 require("config.options")
 require("config.colors")
 require("config.plugins")
+require("config.thumbs")
 require("config.tabline")
 require("config.notifications")
 require("config.term")

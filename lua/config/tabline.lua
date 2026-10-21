@@ -8,11 +8,13 @@ function _G.nvim_tabline_click(handle, _, button)
 end
 
 function _G.nvim_tabline()
-    local s = "%="
+    local s = "%#TabLineFill#%="
     local handles = vim.api.nvim_list_tabpages()
+    local names = {}
     for i = 1, vim.fn.tabpagenr("$") do
         local buf = vim.fn.tabpagebuflist(i)[vim.fn.tabpagewinnr(i)]
         local name = vim.t[handles[i]].tabname
+        names[i] = name or vim.NIL
         if not name then
             name = vim.api.nvim_buf_get_name(buf)
             if vim.bo[buf].buftype == "terminal" and name:match("^term://") then
@@ -31,6 +33,27 @@ function _G.nvim_tabline()
         s = s .. " " .. name .. modified .. " "
         s = s .. "%X"
     end
-    return s .. "%=%#TabLineFill#"
+    if vim.fn.exists("SessionLoad") == 0 then
+        vim.g.TabNames = vim.json.encode(names)
+    end
+    return s .. "%#TabLineFill#%="
 end
 vim.o.tabline = "%!v:lua.nvim_tabline()"
+
+vim.opt.sessionoptions:append("globals")
+
+vim.api.nvim_create_autocmd("SessionLoadPost", {
+    callback = function()
+        if not vim.g.TabNames then
+            return
+        end
+        local names = vim.json.decode(vim.g.TabNames)
+        for i, tab in ipairs(vim.api.nvim_list_tabpages()) do
+            if type(names[i]) == "string" then
+                vim.t[tab].tabname = names[i]
+            end
+        end
+        vim.g.TabNames = nil
+        vim.cmd.redrawtabline()
+    end,
+})

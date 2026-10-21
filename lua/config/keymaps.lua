@@ -4,6 +4,8 @@ map("n", "-", "<cmd>Oil<CR>", { desc = "File explorer" })
 
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy system clipboard" })
 map({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste system clipboard" })
+map("n", "<leader>o", function() vim.ui.open(vim.fn.expand("%:p")) end,
+    { desc = "Open file externally" })
 
 -- pickers (fzf-lua)
 map("n", "<leader>fo", "<cmd>FzfLua<CR>", { desc = "Open FzfLua" })
@@ -15,13 +17,13 @@ map("n", "<leader>fh", "<cmd>FzfLua helptags<CR>", { desc = "Help" })
 map("n", "<leader>fr", "<cmd>FzfLua resume<CR>", { desc = "Resume" })
 map("n", "<leader>fc", function() require("config.cc_sessions").pick() end, { desc = "Claude sessions" })
 map("n", "<leader>fu", "<cmd>FzfLua undotree<CR>", { desc = "Undotree" })
-map("n", "<A-c>", function()
-    require("fzf-lua").fzf_exec("fd -H -t d", {
+local function pick_dir(cb)
+    require("fzf-lua").fzf_exec("echo .; fd -H -t d", {
         cwd = vim.env.HOME,
         prompt = "~/",
         actions = {
             default = function(s)
-                vim.cmd.cd(vim.fs.joinpath(vim.env.HOME, s[1]))
+                cb(vim.fs.joinpath(vim.env.HOME, s[1]))
             end,
         },
         preview = "ls -A --color=always {}",
@@ -31,7 +33,9 @@ map("n", "<A-c>", function()
             preview = { layout = "horizontal", horizontal = "right:40%" },
         },
     })
-end, { desc = "cd (tab)" })
+end
+map("n", "<A-c>", function() pick_dir(vim.cmd.cd) end, { desc = "cd (tab)" })
+map("n", "<leader>fd", function() pick_dir(require("oil").open) end, { desc = "Open dir in oil" })
 
 -- toggles
 map("n", "<leader>ti", function()
@@ -49,6 +53,7 @@ map("n", "<leader>T", function()
 end, { desc = "Rename tab" })
 map({ "n", "t" }, "<C-Tab>", "<Cmd>tabnext<CR>")
 map({ "n", "t" }, "<C-S-Tab>", "<Cmd>tabprevious<CR>")
+map({ "n", "t" }, "<C-Esc>", "<Cmd>tabnext #<CR>", { desc = "Last tab" })
 
 -- window navigation
 map("n", "<C-h>", "<C-w>h")
@@ -75,3 +80,5 @@ local term = require("config.term")
 map({ "t", "i", "v", "n" }, "<C-s>", term.toggle)
 map("t", "<C-\\><C-s>", "<C-s>")
 map("t", "<A-Esc>", "<C-\\><C-n>", { desc = "Leave terminal mode" })
+map("t", "<C-^>", "<C-\\><C-^>")
+map("t", "<C-\\><C-^>", "<C-^>")

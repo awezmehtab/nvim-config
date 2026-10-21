@@ -17,7 +17,8 @@ vim.pack.add({
     gh("3rd/image.nvim"),
     gh("chomosuke/typst-preview.nvim"),
     gh("tpope/vim-fugitive"),
-    gh("sindrets/diffview.nvim"),
+    gh("kokusenz/deltaview.nvim"),
+    gh("nvim-treesitter/nvim-treesitter"),
 })
 
 -- not loaded until ":packadd ..."
@@ -54,6 +55,17 @@ require("oil").setup({
         ["<C-s>"] = false,
         ["<C-h>"] = false,
         ["<C-l>"] = false,
+        ["gm"] = {
+            desc = "Toggle cursor lock to filename",
+            callback = function()
+                local cfg = require("oil.config")
+                if cfg.constrain_cursor then
+                    cfg.constrain_cursor = false
+                else
+                    cfg.constrain_cursor = "name"
+                end
+            end,
+        },
     },
     columns = {
         "icon",
@@ -64,13 +76,15 @@ require("oil").setup({
     view_options = {
         show_hidden = true,
     },
-    use_default_keymaps = true,
     delete_to_trash = true,
     watch_for_changes = true,
-    constrain_cursor = false,
+    constrain_cursor = "name",
+    preview_win = { preview_method = "load" },
 })
 
-require("fzf-lua").setup({})
+require("fzf-lua").setup({
+    buffers = { fzf_opts = { ["--header-lines"] = false } },
+})
 
 require("conform").setup({
     formatters_by_ft = {
@@ -88,5 +102,9 @@ require("conform").setup({
 })
 vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 
-require("image").setup()
-require("diffview").setup()
+require("image").setup({ max_height_window_percentage = 100 })
+require("deltaview").setup()
+
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function() pcall(vim.treesitter.start) end,
+})
